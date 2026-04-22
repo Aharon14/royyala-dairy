@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <title>Dashboard - Royyala Diary</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { background-color: #f8f9fa; }
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-4px); }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .welcome-section {
+            background: linear-gradient(
+                135deg, #0F6E56 0%, #1a9e7a 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+
+    <div class="welcome-section">
+        <h4 class="mb-1">
+            Welcome back,
+            <span th:text="${farmerName}">Farmer</span>! 👋
+        </h4>
+        <p class="mb-0 opacity-75">
+            Here is your farm summary for today
+        </p>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3 col-6">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center p-3">
+                    <div class="fs-1 mb-1">🏊</div>
+                    <div class="stat-number"
+                         style="color:#0F6E56"
+                         th:text="${pondCount}">0</div>
+                    <div class="text-muted small">
+                        My Ponds
+                    </div>
+                    <a th:href="@{/ponds}"
+                       class="btn btn-sm mt-2 w-100"
+                       style="background-color:#0F6E56;
+                              color:white;">
+                        Manage
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center p-3">
+                    <div class="fs-1 mb-1">🔄</div>
+                    <div class="stat-number"
+                         style="color:#185FA5"
+                         th:text="${activeCycleCount}">0</div>
+                    <div class="text-muted small">
+                        Active Cycles
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center p-3">
+                    <div class="fs-1 mb-1">✅</div>
+                    <div class="stat-number"
+                         style="color:#854F0B"
+                         th:text="${totalHarvestCount}">0</div>
+                    <div class="text-muted small">
+                        Total Harvests
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+            <div class="card stat-card shadow-sm h-100">
+                <div class="card-body text-center p-3">
+                    <div class="fs-1 mb-1">💰</div>
+                    <div class="stat-number"
+                         th:text="${totalProfit >= 0}
+                             ? '₹' + ${totalProfit}
+                             : '-₹' + ${-totalProfit}"
+                         th:style="${totalProfit >= 0}
+                             ? 'color:#0F6E56'
+                             : 'color:#dc3545'">
+                        ₹0
+                    </div>
+                    <div class="text-muted small">
+                        Total Profit/Loss
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 style="color:#0F6E56">
+                        Quick Actions
+                    </h6>
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/ponds/add}"
+                           class="btn"
+                           style="background-color:#0F6E56;
+                                  color:white;">
+                            + Add New Pond
+                        </a>
+                        <a th:href="@{/ponds}"
+                           class="btn btn-outline-secondary">
+                            View All Ponds
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 style="color:#0F6E56">
+                        About Royyala Diary
+                    </h6>
+                    <p class="text-muted small mb-0">
+                        Track your shrimp farm harvest cycles,
+                        log weekly feed entries, calculate
+                        profit and loss automatically, and get
+                        AI-powered harvest predictions.
+                        Built for farmers in Andhra Pradesh.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

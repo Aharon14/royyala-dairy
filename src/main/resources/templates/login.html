@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Royyala Diary - Login</title>
+    <link rel="stylesheet" 
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+
+            <div class="card shadow">
+                <div class="card-body p-4">
+
+                    <h3 class="text-center mb-1" style="color:#0F6E56">
+                        Royyala Diary
+                    </h3>
+                    <p class="text-center text-muted mb-4">
+                        Shrimp Farm Tracker
+                    </p>
+
+                    <div th:if="${param.registered}" 
+                         class="alert alert-success">
+                        Registration successful! Please login.
+                    </div>
+
+                    <div th:if="${param.error}" 
+                         class="alert alert-danger">
+                        Invalid email or password.
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="username" 
+                                   class="form-control" 
+                                   placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" 
+                                   class="form-control" 
+                                   placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" 
+                                class="btn w-100" 
+                                style="background-color:#0F6E56; color:white;">
+                            Login
+                        </button>
+                    </form>
+
+                    <p class="text-center mt-3">
+                        New farmer? 
+                        <a th:href="@{/register}" style="color:#0F6E56">
+                            Register here
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

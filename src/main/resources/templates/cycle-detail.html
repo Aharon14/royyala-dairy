@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Cycle Detail - Royyala Diary</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+
+	<!-- Navbar -->
+	<div th:replace="fragments/navbar :: navbar"></div>
+
+	<div class="container mt-4">
+
+		<!-- Header -->
+		<div class="row mb-4">
+			<div class="col-md-8">
+				<h5 style="color: #0F6E56">
+					Cycle #<span th:text="${cycle.id}"></span> —
+					<span th:text="${cycle.pond.pondName}"></span>
+				</h5>
+
+				<p class="text-muted mb-0">
+					Started: <span th:text="${cycle.startDate}"></span>
+				</p>
+			</div>
+
+			<div class="col-md-4 text-end">
+				<span class="badge fs-6"
+					th:text="${cycle.status}"
+					th:classappend="${cycle.status == 'ACTIVE'} ? ' bg-success' : ' bg-secondary'">
+				</span>
+			</div>
+		</div>
+
+		<!-- Summary Cards -->
+		<div class="row mb-4">
+
+			<div class="col-md-3">
+				<div class="card text-center p-3 shadow-sm">
+					<h6 class="text-muted">Seed Count</h6>
+					<h4 style="color: #0F6E56" th:text="${cycle.seedCount}"></h4>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="card text-center p-3 shadow-sm">
+					<h6 class="text-muted">Seed Cost</h6>
+					<h4 style="color: #0F6E56">
+						₹<span th:text="${cycle.seedCost}"></span>
+					</h4>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="card text-center p-3 shadow-sm">
+					<h6 class="text-muted">Total Feed Cost</h6>
+					<h4 style="color: #0F6E56">
+						₹<span th:text="${totalFeedCost}"></span>
+					</h4>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="card text-center p-3 shadow-sm">
+					<h6 class="text-muted">Total Cost</h6>
+					<h4 style="color: #854F0B">
+						₹<span th:text="${cycle.seedCost + totalFeedCost}"></span>
+					</h4>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Feed Section -->
+		<div class="d-flex justify-content-between align-items-center mb-3">
+			<h6 style="color: #0F6E56">Weekly Feed Entries</h6>
+
+			<div class="d-flex gap-2">
+				<a th:href="@{/feed/add/{id}(id=${cycle.id})}"
+				   class="btn btn-sm"
+				   style="background-color: #0F6E56; color: white;"
+				   th:if="${cycle.status == 'ACTIVE'}">
+					+ Log Feed Entry
+				</a>
+
+				<a th:href="@{/harvest/log/{id}(id=${cycle.id})}"
+				   class="btn btn-sm btn-warning"
+				   th:if="${cycle.status == 'ACTIVE'}">
+					Log Final Harvest
+				</a>
+			</div>
+		</div>
+
+		<!-- No Feed -->
+		<div th:if="${#lists.isEmpty(feedEntries)}" class="alert alert-info">
+			No feed entries yet.
+		</div>
+
+		<!-- Feed Table -->
+		<div class="table-responsive" th:if="${!#lists.isEmpty(feedEntries)}">
+			<table class="table table-bordered table-hover">
+
+				<thead style="background-color: #0F6E56; color: white;">
+					<tr>
+						<th>Week</th>
+						<th>Date</th>
+						<th>Quantity</th>
+						<th>Cost</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="entry : ${feedEntries}">
+						<td th:text="|Week ${entry.weekNumber}|"></td>
+						<td th:text="${entry.feedDate}"></td>
+						<td th:text="${entry.feedQuantityKg} + ' kg'"></td>
+						<td th:text="'₹' + ${entry.feedCost}"></td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+		<!-- AI Prediction -->
+		<div th:if="${prediction != null}" class="mt-4">
+			<div class="card border-info">
+				<div class="card-header bg-light">
+					<h6>🤖 AI Prediction</h6>
+				</div>
+				<div class="card-body">
+					<p style="white-space: pre-line;" th:text="${prediction}"></p>
+				</div>
+			</div>
+		</div>
+
+		<a th:href="@{/ai/predict/{id}(id=${cycle.id})}"
+		   class="btn btn-info mt-3"
+		   th:if="${cycle.status == 'ACTIVE'}">
+			🤖 Predict Harvest
+		</a>
+
+		<!-- Harvest Section -->
+		<div th:if="${harvest != null}" class="mt-4">
+
+			<h6 style="color: #0F6E56">Harvest Result</h6>
+
+			<div class="row mt-3">
+
+				<div class="col-md-3">
+					<div class="card text-center p-3 shadow-sm">
+						<h6>Total Harvest</h6>
+						<h4 th:text="${harvest.totalKg} + ' kg'"></h4>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card text-center p-3 shadow-sm">
+						<h6>Price/kg</h6>
+						<h4 th:text="'₹' + ${harvest.pricePerKg}"></h4>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="card text-center p-3 shadow-sm">
+						<h6>Revenue</h6>
+						<h4 th:text="'₹' + ${harvest.totalRevenue}"></h4>
+					</div>
+				</div>
+
+				<!--PROFIT / LOSS  -->
+				<div class="col-md-3">
+					<div class="card text-center p-3 shadow-sm">
+						<h6 class="text-muted">Profit / Loss</h6>
+						<h4
+							th:text="${harvest.profitOrLoss >= 0} 
+							         ? |₹ ${harvest.profitOrLoss}| 
+							         : |-₹ ${-harvest.profitOrLoss}|"
+							th:style="${harvest.profitOrLoss >= 0} 
+							         ? 'color:#0F6E56' 
+							         : 'color:#dc3545'">
+						</h4>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

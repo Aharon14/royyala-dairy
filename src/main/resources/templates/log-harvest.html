@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Log Harvest - Royyala Diary</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<!-- Navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- ✅ LIVE PRICE CARD (FIXED LINKS) -->
+            <div class="card shadow-sm border-0 mb-3"
+                 style="border-radius:12px;">
+                <div class="card-body"
+                     style="background: linear-gradient(135deg, #E1F5EE 0%, #E6F1FB 100%);">
+
+                    <h6 style="color:#0F6E56;">
+                        Check Today's Prawn Market Price
+                    </h6>
+
+                    <p class="text-muted small mb-3">
+                        Use the links below to check latest shrimp prices.
+                        Enter the price manually based on your market.
+                    </p>
+
+                    <div class="d-grid gap-2">
+
+                        <!-- ✅ ONLY WORKING LINKS -->
+                        <a href="https://www.google.com/search?q=vannamei+shrimp+price+today+andhra+pradesh"
+                           target="_blank"
+                           class="btn btn-sm fw-bold"
+                           style="background-color:#0F6E56; color:white;">
+                            Live Shrimp Price (Google)
+                        </a>
+
+                        <a href="https://www.youtube.com/results?search_query=shrimp+price+today+andhra+pradesh"
+                           target="_blank"
+                           class="btn btn-sm btn-outline-secondary">
+                            Latest Price Updates (YouTube)
+                        </a>
+
+                    </div>
+
+                    <p class="mt-2 mb-0 small text-muted">
+                        Note: Prices vary by size (count) and buyer demand.
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- ✅ HARVEST FORM -->
+            <div class="card shadow border-0"
+                 style="border-radius:12px;">
+                <div class="card-body p-4">
+
+                    <h5 style="color:#0F6E56">
+                        Log Final Harvest
+                    </h5>
+
+                    <p class="text-muted small mb-4">
+                        Enter harvest details to calculate profit or loss
+                    </p>
+
+                    <form th:action="@{/harvest/log/{id}(id=${cycleId})}"
+                          th:object="${harvest}"
+                          method="post">
+
+                        <!-- Date -->
+                        <div class="mb-3">
+                            <label class="fw-bold">Harvest Date</label>
+                            <input type="date"
+                                   th:field="*{harvestDate}"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <!-- Total KG -->
+                        <div class="mb-3">
+                            <label class="fw-bold">Total Harvest (kg)</label>
+                            <input type="number"
+                                   th:field="*{totalKg}"
+                                   class="form-control"
+                                   step="0.1"
+                                   placeholder="e.g. 800"
+                                   required>
+                        </div>
+
+                        <!-- Shrimp Count (Optional) -->
+                        <div class="mb-3">
+                            <label class="fw-bold">Shrimp Size (Count)</label>
+                            <select class="form-control">
+                                <option value="">Select (optional)</option>
+                                <option>30 Count</option>
+                                <option>40 Count</option>
+                                <option>50 Count</option>
+                                <option>60 Count</option>
+                            </select>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="mb-3">
+                            <label class="fw-bold">Price per kg (₹)</label>
+                            <input type="number"
+                                   th:field="*{pricePerKg}"
+                                   class="form-control"
+                                   step="0.01"
+                                   placeholder="Enter market price"
+                                   required>
+
+                            <div class="form-text">
+                                Enter price based on your local buyer or agent
+                            </div>
+                        </div>
+
+                        <!-- Info -->
+                        <div class="alert alert-info small py-2 mb-3">
+                            Revenue = Total kg × Price per kg.<br>
+                            Profit/Loss calculated automatically.
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit"
+                                class="btn w-100 fw-bold"
+                                style="background:#0F6E56; color:white;">
+                            Save Harvest
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
