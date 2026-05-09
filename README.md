@@ -28,7 +28,7 @@ Royyala Diary digitises the entire process:
 - **Google Gemini AI** predicts the harvest date based on cycle data
 
 ### 🌐 Live Demo
-> 🔗 **[https://royyala-diary.onrender.com](https://royyala-diary.onrender.com)**
+> 🔗 **[https://royyala-dairy-production.up.railway.app/](https://royyala-dairy-production.up.railway.app/)**
 >
 > ⚠️ Free tier — first load may take 30-60 seconds to wake up
 
