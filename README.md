@@ -277,7 +277,7 @@ The app is deployed on **Render** with **Railway MySQL**:
 
 | Service | Provider |
 |---|---|
-| Web App | Render (Docker) |
+| Web App | Railway |
 | MySQL Database | Railway |
 | AI Predictions | Google Gemini API |
 
@@ -353,7 +353,7 @@ This project is licensed under the MIT License.
 **Tadi Aharon**
 - 📧 aharontadi@gmail.com
 - 🔗 [linkedin.com/in/tadiaharon](https://linkedin.com/in/tadiaharon)
-- 🐙 [github.com/tadiaharon](https://github.com/tadiaharon)
+- 🐙 [github.com/tadiaharon](https://github.com/aharon14)
 
 ---
 
