@@ -353,7 +353,7 @@ This project is licensed under the MIT License.
 **Tadi Aharon**
 - 📧 aharontadi@gmail.com
 - 🔗 [linkedin.com/in/tadiaharon](https://linkedin.com/in/tadiaharon)
-- 🐙 [github.com/tadiaharon](https://github.com/aharon14)
+- 🐙 [github.com/aharon14](https://github.com/aharon14)
 
 ---
 
